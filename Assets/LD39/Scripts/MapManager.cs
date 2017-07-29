@@ -76,6 +76,7 @@ namespace LD39 {
 		public int chunksX = 10;
 		public int chunksY = 10;
 		public int seed = 456159;
+		public int mainPathLength = 10;
 
 		public Transform mapRoot;
 
@@ -97,7 +98,7 @@ namespace LD39 {
 
 		public void GenerateMap() {
 			Grid = new MapGrid(chunksX, chunksY, chunkSize);
-			GenerateMainPath(10);
+			GenerateMainPath(mainPathLength);
 			GenerateOptionnalPaths();
 		}
 
@@ -150,7 +151,7 @@ namespace LD39 {
 		private void GenerateOptionnalPaths() {
 			foreach (Vector2i mainPos in mainPath) {
 				MapChunk mainChunk = Grid[mainPos.x, mainPos.z];
-				List<Side> openUnusedSides = mainChunk.GetAllOpenSides();
+				List<Side> openUnusedSides = mainChunk.GetAllOpenUnusedSides();
 				if (openUnusedSides.Count == 0) {
 					continue;
 				}

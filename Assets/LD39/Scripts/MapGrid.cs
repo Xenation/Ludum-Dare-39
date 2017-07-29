@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace LD39 {
 
 		public MapChunk[,] chunks;
 		private float realChunkSize;
+
+		private int index;
 
 		public MapGrid(int sizeX, int sizeZ, float realSize) {
 			if (sizeX % 2 == 0) {
@@ -24,8 +27,12 @@ namespace LD39 {
 		public void SetChunk(Vector2i fakeGridPos, MapChunk chunk) {
 			Vector2i gridPos = FakeToRealGridPos(fakeGridPos);
 			chunk.FakePos = fakeGridPos;
+			if (chunks[gridPos.x, gridPos.z] != null) {
+				GameObject.Destroy(chunks[gridPos.x, gridPos.z].gameObject);
+			}
 			chunks[gridPos.x, gridPos.z] = chunk;
 			chunk.transform.position = new Vector3(realChunkSize * fakeGridPos.x, 0, realChunkSize * fakeGridPos.z);
+			chunk.name = "Chunk " + (index++);
 			UpdateAdjacents(gridPos);
 		}
 

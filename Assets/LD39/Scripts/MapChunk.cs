@@ -64,16 +64,16 @@ namespace LD39 {
 
 		public List<Side> GetAllOpenUnusedSides() {
 			List<Side> openUnusedSides = new List<Side>(4);
-			if (Top.Type != SideType.CLOSED && Top.adjacentChunk == null) {
+			if (Top.Type != SideType.CLOSED && (Top.adjacentChunk == null || Top.adjacentChunk.Bottom.Type == SideType.CLOSED)) {
 				openUnusedSides.Add(Top);
 			}
-			if (Right.Type != SideType.CLOSED && Right.adjacentChunk == null) {
+			if (Right.Type != SideType.CLOSED && (Right.adjacentChunk == null || Right.adjacentChunk.Left.Type == SideType.CLOSED)) {
 				openUnusedSides.Add(Right);
 			}
-			if (Bottom.Type != SideType.CLOSED && Bottom.adjacentChunk == null) {
+			if (Bottom.Type != SideType.CLOSED && (Bottom.adjacentChunk == null || Bottom.adjacentChunk.Top.Type == SideType.CLOSED)) {
 				openUnusedSides.Add(Bottom);
 			}
-			if (Left.Type != SideType.CLOSED && Left.adjacentChunk == null) {
+			if (Left.Type != SideType.CLOSED && (Left.adjacentChunk == null || Left.adjacentChunk.Right.Type == SideType.CLOSED)) {
 				openUnusedSides.Add(Left);
 			}
 			return openUnusedSides;
