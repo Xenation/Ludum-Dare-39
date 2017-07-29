@@ -218,40 +218,95 @@ MonoBehaviour:
   chunksX: 20
   chunksY: 20
   seed: 456159
-  mapRoot: {fileID: 2080284625}
+  mapRoot: {fileID: 0}
   startingRoom:
-    top: 0
-    right: 0
+    top: 1
+    right: 1
     bottom: 1
     left: 1
-    prefab: {fileID: 1837137604155946, guid: d47e456bd5e7b32409a15abf8f9ee779, type: 2}
+    prefab: {fileID: 1579223575967010, guid: 3a329aa407715c342b0f7d2f69818df4, type: 2}
   endingRoom:
     top: 1
     right: 1
+    bottom: 1
+    left: 1
+    prefab: {fileID: 1579223575967010, guid: 3a329aa407715c342b0f7d2f69818df4, type: 2}
+  roomPrefabs:
+  - top: 0
+    right: 0
+    bottom: 1
+    left: 0
+    prefab: {fileID: 1805788918237450, guid: c253113d310c0f74bae01de3ccd66a9f, type: 2}
+  - top: 0
+    right: 0
+    bottom: 1
+    left: 1
+    prefab: {fileID: 1520922834367900, guid: 41de7cecc7a4e3142b5068e78838712a, type: 2}
+  - top: 1
+    right: 0
+    bottom: 1
+    left: 1
+    prefab: {fileID: 1260362163538484, guid: 2b317430c6a91e14781fee7c89dc2ac7, type: 2}
+  - top: 0
+    right: 0
     bottom: 0
     left: 1
-    prefab: {fileID: 1612573538904838, guid: 6bcfbf97be3ac2a438bc24ccc1195d1a, type: 2}
-  roomPrefabs:
+    prefab: {fileID: 1744291425620162, guid: a0323d34477362f4f8276e91c726d67a, type: 2}
   - top: 1
     right: 1
     bottom: 0
     left: 1
-    prefab: {fileID: 1612573538904838, guid: 6bcfbf97be3ac2a438bc24ccc1195d1a, type: 2}
+    prefab: {fileID: 1967830849339462, guid: 4243090bd4ce465478fc76cb8b832869, type: 2}
+  - top: 0
+    right: 1
+    bottom: 0
+    left: 0
+    prefab: {fileID: 1162887562584772, guid: 8545dc8587412f742909646be3aed2c9, type: 2}
+  - top: 0
+    right: 1
+    bottom: 1
+    left: 0
+    prefab: {fileID: 1712066903183548, guid: c6cc5852d7a787c4bb1def232af4a3c2, type: 2}
+  - top: 0
+    right: 1
+    bottom: 1
+    left: 1
+    prefab: {fileID: 1198469509058034, guid: 44e5983b8a956534e92ebb1cae63de4f, type: 2}
+  - top: 0
+    right: 1
+    bottom: 0
+    left: 1
+    prefab: {fileID: 1252797557200500, guid: bca6f6fa811259740b517b85a712078f, type: 2}
+  - top: 1
+    right: 0
+    bottom: 0
+    left: 0
+    prefab: {fileID: 1061978533854974, guid: 01dd38f38365b0e4b8bc371fe5f1f189, type: 2}
+  - top: 1
+    right: 0
+    bottom: 1
+    left: 0
+    prefab: {fileID: 1700368483726770, guid: cd4b1c9c3d3ae764b8cac923ddbfe343, type: 2}
+  - top: 1
+    right: 0
+    bottom: 0
+    left: 1
+    prefab: {fileID: 1517080305263698, guid: 7fb1b626497c0de44ae31e47dd4b55c5, type: 2}
   - top: 1
     right: 1
     bottom: 0
     left: 0
-    prefab: {fileID: 1044546813201752, guid: 06a6dd8a74d031c4c89f8fa7a3dcb11b, type: 2}
-  - top: 0
+    prefab: {fileID: 1198957966986650, guid: 57ab16dda75add44893067aeb6d5c55a, type: 2}
+  - top: 1
     right: 1
-    bottom: 0
-    left: 1
-    prefab: {fileID: 1861724687352462, guid: ae981165a402d0743a25efa7276449ea, type: 2}
-  - top: 0
-    right: 0
+    bottom: 1
+    left: 0
+    prefab: {fileID: 1181099933486218, guid: 02fb74e0344616e418b5f43ec3104922, type: 2}
+  - top: 1
+    right: 1
     bottom: 1
     left: 1
-    prefab: {fileID: 1837137604155946, guid: d47e456bd5e7b32409a15abf8f9ee779, type: 2}
+    prefab: {fileID: 1579223575967010, guid: 3a329aa407715c342b0f7d2f69818df4, type: 2}
 --- !u!4 &676355273
 Transform:
   m_ObjectHideFlags: 0
@@ -353,32 +408,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2080284624
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2080284625}
-  m_Layer: 0
-  m_Name: Map
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2080284625
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2080284624}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.7052054, y: 7.650742, z: -9.49156}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace LD39 {
@@ -8,6 +9,25 @@ namespace LD39 {
 		public SideType right;
 		public SideType bottom;
 		public SideType left;
+
+		public int OpenCount {
+			get {
+				int count = 0;
+				if (top != SideType.CLOSED) {
+					count++;
+				}
+				if (right != SideType.CLOSED) {
+					count++;
+				}
+				if (bottom != SideType.CLOSED) {
+					count++;
+				}
+				if (left != SideType.CLOSED) {
+					count++;
+				}
+				return count;
+			}
+		}
 
 		public GameObject prefab;
 
@@ -45,6 +65,9 @@ namespace LD39 {
 		public MapGrid Grid { get; private set; }
 
 		public void Start() {
+			if (mapRoot == null) {
+				mapRoot = new GameObject("Map").transform;
+			}
 			Random.InitState(seed);
 			GenerateMap();
 		}
@@ -58,9 +81,37 @@ namespace LD39 {
 			MapChunk curChunk = MapChunk.CreateMapChunk(startingRoom);
 			Grid.SetChunk(new Vector2i(0, 0), curChunk);
 			Side nextSide = null;
+			bool stuck = false;
 			for (int i = 0; i < mainPathLength; i++) {
-				nextSide = curChunk.GetRandomOpenUnusedSide();
-				curChunk = MapChunk.CreateMapChunk(GetRandomRoomPrefab(nextSide.Orient.GetOposite()));
+				List<Side> possibleSides = curChunk.GetAllOpenUnusedSides();
+				nextSide = possibleSides[Random.Range(0, possibleSides.Count)];
+				possibleSides.Remove(nextSide);
+				Orientation requiredOri = nextSide.Orient.GetOposite();
+				MapChunkPrefab prefab = null;
+				while (Grid.GetAdjacentSidesLeadingToTile(nextSide.GetAdjacentPos(), requiredOri).Length != 0) {
+					if (possibleSides.Count == 0) {
+						stuck = true;
+						break;
+					}
+					nextSide = possibleSides[Random.Range(0, possibleSides.Count)];
+					possibleSides.Remove(nextSide);
+					requiredOri = nextSide.Orient.GetOposite();
+				}
+				List<MapChunkPrefab> possiblePrefabs = GetAllRoomPrefabs(requiredOri, nextSide.Type, Grid.GetAdjacentSidesOccupied(nextSide.GetAdjacentPos(), requiredOri));
+				prefab = possiblePrefabs[Random.Range(0, possiblePrefabs.Count)];
+				possiblePrefabs.Remove(prefab);
+				while (prefab.OpenCount < 2) {
+					if (possiblePrefabs.Count == 0) {
+						stuck = true;
+						break;
+					}
+					prefab = possiblePrefabs[Random.Range(0, possiblePrefabs.Count)];
+					possiblePrefabs.Remove(prefab);
+				}
+				if (stuck) {
+					break;
+				}
+				curChunk = MapChunk.CreateMapChunk(prefab);
 				Grid.SetChunk(nextSide.GetAdjacentPos(), curChunk);
 			}
 			nextSide = curChunk.GetRandomOpenUnusedSide();
@@ -72,15 +123,54 @@ namespace LD39 {
 			return roomPrefabs[Random.Range(0, roomPrefabs.Length)];
 		}
 
-		public MapChunkPrefab GetRandomRoomPrefab(Orientation requiredOri) {
+		public MapChunkPrefab GetRandomRoomPrefab(Orientation requiredOri, SideType requiredType) {
 			MapChunkPrefab[] validChunkPrefabs = new MapChunkPrefab[roomPrefabs.Length];
 			int count = 0;
 			foreach (MapChunkPrefab chunkPrefab in roomPrefabs) {
-				if (chunkPrefab.GetSideType(requiredOri) != SideType.CLOSED) {
+				if (chunkPrefab.GetSideType(requiredOri) == requiredType) {
 					validChunkPrefabs[count++] = chunkPrefab;
 				}
 			}
 			return validChunkPrefabs[Random.Range(0, count)];
+		}
+
+		public MapChunkPrefab GetRandomRoomPrefab(Orientation requiredOri, SideType requiredType, Orientation[] blockedSides) {
+			MapChunkPrefab[] validChunkPrefabs = new MapChunkPrefab[roomPrefabs.Length];
+			int count = 0;
+			foreach (MapChunkPrefab chunkPrefab in roomPrefabs) {
+				if (chunkPrefab.GetSideType(requiredOri) == requiredType) {
+					bool leadsToBlocked = false;
+					foreach (Orientation blocked in blockedSides) {
+						if (chunkPrefab.GetSideType(blocked) != SideType.CLOSED) {
+							leadsToBlocked = true;
+							break;
+						}
+					}
+					if (!leadsToBlocked) {
+						validChunkPrefabs[count++] = chunkPrefab;
+					}
+				}
+			}
+			return validChunkPrefabs[Random.Range(0, count)];
+		}
+
+		public List<MapChunkPrefab> GetAllRoomPrefabs(Orientation requiredOri, SideType requiredType, Orientation[] blockedSides) {
+			List<MapChunkPrefab> validChunkPrefabs = new List<MapChunkPrefab>();
+			foreach (MapChunkPrefab chunkPrefab in roomPrefabs) {
+				if (chunkPrefab.GetSideType(requiredOri) == requiredType) {
+					bool leadsToBlocked = false;
+					foreach (Orientation blocked in blockedSides) {
+						if (chunkPrefab.GetSideType(blocked) != SideType.CLOSED) {
+							leadsToBlocked = true;
+							break;
+						}
+					}
+					if (!leadsToBlocked) {
+						validChunkPrefabs.Add(chunkPrefab);
+					}
+				}
+			}
+			return validChunkPrefabs;
 		}
 
 	}

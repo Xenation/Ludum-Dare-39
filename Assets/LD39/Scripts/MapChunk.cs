@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace LD39 {
@@ -59,6 +60,23 @@ namespace LD39 {
 				openUnusedSides[count++] = Left;
 			}
 			return openUnusedSides[Random.Range(0, count)];
+		}
+
+		public List<Side> GetAllOpenUnusedSides() {
+			List<Side> openUnusedSides = new List<Side>(4);
+			if (Top.Type != SideType.CLOSED && Top.adjacentChunk == null) {
+				openUnusedSides.Add(Top);
+			}
+			if (Right.Type != SideType.CLOSED && Right.adjacentChunk == null) {
+				openUnusedSides.Add(Right);
+			}
+			if (Bottom.Type != SideType.CLOSED && Bottom.adjacentChunk == null) {
+				openUnusedSides.Add(Bottom);
+			}
+			if (Left.Type != SideType.CLOSED && Left.adjacentChunk == null) {
+				openUnusedSides.Add(Left);
+			}
+			return openUnusedSides;
 		}
 
 	}
