@@ -79,5 +79,39 @@ namespace LD39 {
 			return openUnusedSides;
 		}
 
+		public List<Side> GetAllOpenSides() {
+			List<Side> openSides = new List<Side>();
+			if (Top.Type != SideType.CLOSED) {
+				openSides.Add(Top);
+			}
+			if (Right.Type != SideType.CLOSED) {
+				openSides.Add(Right);
+			}
+			if (Bottom.Type != SideType.CLOSED) {
+				openSides.Add(Bottom);
+			}
+			if (Left.Type != SideType.CLOSED) {
+				openSides.Add(Left);
+			}
+			return openSides;
+		}
+
+		public List<Orientation> GetAllOpenSidesOrientations() {
+			List<Orientation> openSides = new List<Orientation>();
+			if (Top.Type != SideType.CLOSED) {
+				openSides.Add(Orientation.TOP);
+			}
+			if (Right.Type != SideType.CLOSED) {
+				openSides.Add(Orientation.RIGHT);
+			}
+			if (Bottom.Type != SideType.CLOSED) {
+				openSides.Add(Orientation.BOTTOM);
+			}
+			if (Left.Type != SideType.CLOSED) {
+				openSides.Add(Orientation.LEFT);
+			}
+			return openSides;
+		}
+
 	}
 }

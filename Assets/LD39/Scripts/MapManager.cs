@@ -46,6 +46,27 @@ namespace LD39 {
 			}
 		}
 
+		public List<Orientation> GetOpenSides() {
+			List<Orientation> oris = new List<Orientation>();
+			if (top != SideType.CLOSED) {
+				oris.Add(Orientation.TOP);
+			}
+			if (right != SideType.CLOSED) {
+				oris.Add(Orientation.RIGHT);
+			}
+			if (bottom != SideType.CLOSED) {
+				oris.Add(Orientation.BOTTOM);
+			}
+			if (left != SideType.CLOSED) {
+				oris.Add(Orientation.LEFT);
+			}
+			return oris;
+		}
+
+		public bool isSideOpen(Orientation ori) {
+			return GetSideType(ori) != SideType.CLOSED;
+		}
+
 	}
 
 	[AddComponentMenu("LD39/Managers/MapManager")]
@@ -64,6 +85,8 @@ namespace LD39 {
 
 		public MapGrid Grid { get; private set; }
 
+		private List<Vector2i> mainPath;
+
 		public void Start() {
 			if (mapRoot == null) {
 				mapRoot = new GameObject("Map").transform;
@@ -75,11 +98,14 @@ namespace LD39 {
 		public void GenerateMap() {
 			Grid = new MapGrid(chunksX, chunksY, chunkSize);
 			GenerateMainPath(10);
+			GenerateOptionnalPaths();
 		}
 
 		private void GenerateMainPath(int mainPathLength) {
+			mainPath = new List<Vector2i>();
 			MapChunk curChunk = MapChunk.CreateMapChunk(startingRoom);
 			Grid.SetChunk(new Vector2i(0, 0), curChunk);
+			mainPath.Add(curChunk.FakePos);
 			Side nextSide = null;
 			bool stuck = false;
 			for (int i = 0; i < mainPathLength; i++) {
@@ -113,10 +139,64 @@ namespace LD39 {
 				}
 				curChunk = MapChunk.CreateMapChunk(prefab);
 				Grid.SetChunk(nextSide.GetAdjacentPos(), curChunk);
+				mainPath.Add(curChunk.FakePos);
 			}
 			nextSide = curChunk.GetRandomOpenUnusedSide();
 			curChunk = MapChunk.CreateMapChunk(endingRoom);
 			Grid.SetChunk(nextSide.GetAdjacentPos(), curChunk);
+			mainPath.Add(curChunk.FakePos);
+		}
+
+		private void GenerateOptionnalPaths() {
+			foreach (Vector2i mainPos in mainPath) {
+				MapChunk mainChunk = Grid[mainPos.x, mainPos.z];
+				List<Side> openUnusedSides = mainChunk.GetAllOpenSides();
+				if (openUnusedSides.Count == 0) {
+					continue;
+				}
+				foreach (Side unusedSide in openUnusedSides) {
+					List<Orientation> adjOpen = null;
+					if (unusedSide.adjacentChunk != null) {
+						adjOpen = unusedSide.adjacentChunk.GetAllOpenSidesOrientations();
+					} else {
+						adjOpen = new List<Orientation>();
+					}
+					adjOpen.Add(unusedSide.Orient.GetOposite());
+					Grid.SetChunk(unusedSide.GetAdjacentPos(), MapChunk.CreateMapChunk(GetPrefabMatchingExactly(adjOpen)));
+				}
+			}
+		}
+
+		public MapChunkPrefab GetPrefabMatchingExactly(List<Orientation> openSides) {
+			List<Orientation> closedSides = new List<Orientation>();
+			closedSides.Add(Orientation.TOP);
+			closedSides.Add(Orientation.RIGHT);
+			closedSides.Add(Orientation.BOTTOM);
+			closedSides.Add(Orientation.LEFT);
+			foreach (Orientation side in openSides) {
+				closedSides.Remove(side);
+			}
+			foreach (MapChunkPrefab prefab in roomPrefabs) {
+				bool matches = true;
+				foreach (Orientation requiredOpen in openSides) {
+					if (!prefab.isSideOpen(requiredOpen)) {
+						matches = false;
+						break;
+					}
+				}
+				foreach (Orientation requiredClosed in closedSides) {
+					if (prefab.isSideOpen(requiredClosed)) {
+						matches = false;
+						break;
+					}
+				}
+				if (!matches) {
+					continue;
+				} else {
+					return prefab;
+				}
+			}
+			return null;
 		}
 
 		public MapChunkPrefab GetRandomRoomPrefab() {
