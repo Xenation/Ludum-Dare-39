@@ -32,6 +32,7 @@ namespace LD39 {
 			}
 			chunks[gridPos.x, gridPos.z] = chunk;
 			chunk.transform.position = new Vector3(realChunkSize * fakeGridPos.x, 0, realChunkSize * fakeGridPos.z);
+			chunk.gameObject.SetActive(true);
 			chunk.name = "Chunk " + (index++);
 			UpdateAdjacents(gridPos);
 		}

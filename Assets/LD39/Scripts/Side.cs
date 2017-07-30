@@ -23,6 +23,21 @@ namespace LD39 {
 			}
 		}
 
+		public static Orientation GetNextClockwise(this Orientation ori) {
+			switch (ori) {
+				case Orientation.TOP:
+					return Orientation.RIGHT;
+				case Orientation.RIGHT:
+					return Orientation.BOTTOM;
+				case Orientation.BOTTOM:
+					return Orientation.LEFT;
+				case Orientation.LEFT:
+					return Orientation.TOP;
+				default:
+					return Orientation.TOP;
+			}
+		}
+
 	}
 
 	public class Side {

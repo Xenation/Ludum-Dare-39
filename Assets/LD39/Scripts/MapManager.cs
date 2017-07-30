@@ -2,73 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace LD39 {
-	[System.Serializable]
-	public class MapChunkPrefab {
-
-		public SideType top;
-		public SideType right;
-		public SideType bottom;
-		public SideType left;
-
-		public int OpenCount {
-			get {
-				int count = 0;
-				if (top != SideType.CLOSED) {
-					count++;
-				}
-				if (right != SideType.CLOSED) {
-					count++;
-				}
-				if (bottom != SideType.CLOSED) {
-					count++;
-				}
-				if (left != SideType.CLOSED) {
-					count++;
-				}
-				return count;
-			}
-		}
-
-		public GameObject prefab;
-
-		public SideType GetSideType(Orientation ori) {
-			switch (ori) {
-				case Orientation.TOP:
-					return top;
-				case Orientation.RIGHT:
-					return right;
-				case Orientation.BOTTOM:
-					return bottom;
-				case Orientation.LEFT:
-					return left;
-				default:
-					return SideType.CLOSED;
-			}
-		}
-
-		public List<Orientation> GetOpenSides() {
-			List<Orientation> oris = new List<Orientation>();
-			if (top != SideType.CLOSED) {
-				oris.Add(Orientation.TOP);
-			}
-			if (right != SideType.CLOSED) {
-				oris.Add(Orientation.RIGHT);
-			}
-			if (bottom != SideType.CLOSED) {
-				oris.Add(Orientation.BOTTOM);
-			}
-			if (left != SideType.CLOSED) {
-				oris.Add(Orientation.LEFT);
-			}
-			return oris;
-		}
-
-		public bool isSideOpen(Orientation ori) {
-			return GetSideType(ori) != SideType.CLOSED;
-		}
-
-	}
-
 	[AddComponentMenu("LD39/Managers/MapManager")]
 	public class MapManager : Singleton<MapManager> {
 
@@ -79,6 +12,7 @@ namespace LD39 {
 		public int mainPathLength = 10;
 
 		public Transform mapRoot;
+		public Transform rotatedRoot;
 
 		public MapChunkPrefab startingRoom;
 		public MapChunkPrefab endingRoom;
@@ -92,8 +26,28 @@ namespace LD39 {
 			if (mapRoot == null) {
 				mapRoot = new GameObject("Map").transform;
 			}
+			if (rotatedRoot == null) {
+				rotatedRoot = new GameObject("RotatedRoot").transform;
+				rotatedRoot.gameObject.SetActive(false);
+			}
 			Random.InitState(seed);
+			startingRoom.Init();
+			endingRoom.Init();
+			foreach (MapChunkPrefab pref in roomPrefabs) {
+				pref.Init();
+			}
+			FillPrefabs();
 			GenerateMap();
+		}
+
+		public void FillPrefabs() {
+			List<MapChunkPrefab> filled = new List<MapChunkPrefab>();
+			foreach (MapChunkPrefab pref in roomPrefabs) {
+				filled.Add(pref);
+				filled.AddRange(pref.GenerateRotatedVersions());
+			}
+			roomPrefabs = filled.ToArray();
+			Debug.Log("New Room Prefab Length = " + roomPrefabs.Length);
 		}
 
 		public void GenerateMap() {
