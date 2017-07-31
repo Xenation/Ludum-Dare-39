@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using LD39.Map;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,7 +30,12 @@ namespace LD39 {
 		private List<Vector2i> mainPath;
 
 		public void Awake() {
+			if (DifficultyManager.I == null) {
+				new GameObject().AddComponent<DifficultyManager>();
+				DifficultyManager.I.currentDifficulty = 3;
+			}
 			mainPathLength = DifficultyManager.I.currentDifficulty;
+			EntityManager.I.player.OnRoomChange += OnPlayerChangedRoom;
 		}
 
 		public void Start() {
@@ -53,6 +59,15 @@ namespace LD39 {
 
 		public void Update() {
 			
+		}
+
+		public void OnPlayerChangedRoom(MapChunk nRoom) {
+			if (!nRoom.gameObject.activeInHierarchy) {
+				nRoom.gameObject.SetActive(true);
+				foreach (MobSpawner spawner in nRoom.transform.GetComponentsInChildren<MobSpawner>()) {
+					spawner.SpawnMob(1f);
+				}
+			}
 		}
 
 		public void GenerateNavMesh() {

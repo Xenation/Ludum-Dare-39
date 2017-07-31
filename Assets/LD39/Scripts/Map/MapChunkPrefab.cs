@@ -232,7 +232,8 @@ namespace LD39 {
 
 		public static MapChunkPrefab Get90ClockwiseRotatedVersion(MapChunkPrefab prefab) {
 			GameObject go = GameObject.Instantiate(prefab.prefab);
-			go.transform.Rotate(new Vector3(0, 90, 0));
+			Vector3 eulerRot = go.transform.rotation.eulerAngles + new Vector3(0, 90, 0);
+			go.transform.rotation = Quaternion.Euler(eulerRot);
 			go.transform.SetParent(MapManager.I.rotatedRoot);
 			MapChunkPrefab p = new MapChunkPrefab();
 			p.prefab = go;

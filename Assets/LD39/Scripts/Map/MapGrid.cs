@@ -34,6 +34,7 @@ namespace LD39 {
 			chunk.transform.position = new Vector3(realChunkSize * fakeGridPos.x, 0, realChunkSize * fakeGridPos.z);
 			chunk.gameObject.SetActive(true);
 			chunk.name = "Chunk " + (index++);
+			chunk.gameObject.SetActive(false);
 			UpdateAdjacents(gridPos);
 		}
 
@@ -112,6 +113,24 @@ namespace LD39 {
 
 		public Vector2i FakeToRealGridPos(Vector2i fakePos) {
 			return fakePos + middle;
+		}
+
+		public Vector2i WorldToFakePos(Vector2 worldPos) {
+			Vector2 pos = (worldPos - new Vector2(realChunkSize / 2, realChunkSize / 2)) / realChunkSize;
+			if (pos.x >= 0) pos.x++;
+			if (pos.y >= 0) pos.y++;
+			return new Vector2i((int) pos.x, (int) pos.y);
+		}
+
+		public Vector2i WorldToRealPos(Vector2 worldPos) {
+			Vector2i pos = WorldToFakePos(worldPos);
+			return FakeToRealGridPos(pos);
+		}
+
+		public MapChunk GetChunkAtWorldPos(Vector3 worldPos) {
+			Vector2 wPos = new Vector2(worldPos.x, worldPos.z);
+			Vector2i gridPos = WorldToRealPos(wPos);
+			return chunks[gridPos.x, gridPos.z];
 		}
 
 		public MapChunk this[int fakeX, int fakeZ] {

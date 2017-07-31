@@ -8,8 +8,12 @@ namespace LD39 {
 
 		public const float AGENT_DEST_REFRESH_INTERVAL = .5f;
 		public const float STOP_DIST = 1.25f;
-		public const float ACCEL = 100f;
+		public const float ACCEL = 8f;
+		public const float ATTACK_DELAY = .5f;
 
+		public float attackRange = 1.1f;
+		public bool inRange = false;
+		public float inRangeTime = 0f;
 		protected NavMeshAgent agent;
 
 		public override void StartState() {
@@ -42,7 +46,33 @@ namespace LD39 {
 				return;
 			}
 
-			body.velocity = Vector3.zero;
+			if (knockVel != Vector3.zero) {
+				agent.velocity += knockVel;
+				knockVel = Vector3.zero;
+			}
+
+			if (!inRange) {
+				animator.SetBool(ANIM_RUNNING, true);
+			}
+
+			if (!inRange && Vector3.Distance(transform.position, EntityManager.I.player.transform.position) < attackRange) {
+				inRangeTime = Time.time;
+				inRange = true;
+				if (!inRange) {
+					animator.SetBool(ANIM_RUNNING, false);
+				}
+			}
+			if (inRange && Time.time - inRangeTime > ATTACK_DELAY) {
+				//Quaternion q = transform.rotation;
+				//q.eulerAngles = new Vector3(0, Vector3.Angle(Vector3.right, EntityManager.I.player.transform.position - transform.position), 0);
+				//transform.rotation = q;
+				transform.LookAt(new Vector3(EntityManager.I.player.transform.position.x, transform.position.y, EntityManager.I.player.transform.position.z));
+				Attack();
+				if (Vector3.Distance(transform.position, EntityManager.I.player.transform.position) > attackRange) {
+					inRange = false;
+				}
+			}
+			
 			DebugPath();
 		}
 

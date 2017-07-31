@@ -24,7 +24,9 @@ namespace LD39 {
 			if (animator == null) {
 				animator = gameObject.AddComponent<Animator>();
 			}
-			held = new Weapon();
+			if (held == null) {
+				held = new Weapon();
+			}
 			CreateAttackDetector();
 		}
 
@@ -37,16 +39,22 @@ namespace LD39 {
 		public override void Die() {
 			base.Die();
 			animator.SetTrigger(ANIM_DIE);
+			GetComponent<CapsuleCollider>().enabled = false;
 			Destroy(gameObject, DEATH_TIMEOUT);
 		}
 
 		public void CreateAttackDetector() {
 			GameObject sphere = new GameObject();
-			sphere.transform.SetParent(transform, false);
-			sphere.transform.position += Vector3.forward * attackCenterDistance;
+			sphere.transform.position = transform.position + transform.forward * attackCenterDistance;
 			attackDetector = sphere.AddComponent<AttackDetector>();
 			attackDetector.range = held.range;
 			attackDetector.parent = this;
+			sphere.transform.SetParent(transform, true);
+			//Vector3 nScale = sphere.transform.localScale;
+			//nScale.x /= sphere.transform.parent.localScale.x;
+			//nScale.y /= sphere.transform.parent.localScale.y;
+			//nScale.z /= sphere.transform.parent.localScale.z;
+			//sphere.transform.localScale = nScale;
 		}
 
 		public override void UpdateState() {

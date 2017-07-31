@@ -13,6 +13,8 @@ ModelImporter:
     100010: Salle_X
     100012: Salle_X_001
     100014: Salle_X_002
+    100016: Salle_Bottom
+    100018: Salle_Top
     400000: //RootNode
     400002: Salle_I
     400004: Salle_L
@@ -21,6 +23,8 @@ ModelImporter:
     400010: Salle_X
     400012: Salle_X_001
     400014: Salle_X_002
+    400016: Salle_Bottom
+    400018: Salle_Top
     2300000: Salle_I
     2300002: Salle_L
     2300004: Salle_Q
@@ -28,6 +32,8 @@ ModelImporter:
     2300008: Salle_X
     2300010: Salle_X_001
     2300012: Salle_X_002
+    2300014: Salle_Bottom
+    2300016: Salle_Top
     3300000: Salle_I
     3300002: Salle_L
     3300004: Salle_Q
@@ -35,6 +41,8 @@ ModelImporter:
     3300008: Salle_X
     3300010: Salle_X_001
     3300012: Salle_X_002
+    3300014: Salle_Bottom
+    3300016: Salle_Top
     4300000: Salle_Q
     4300002: Salle_I
     4300004: Salle_L
@@ -42,6 +50,8 @@ ModelImporter:
     4300008: Salle_X
     4300010: Salle_X_002
     4300012: Salle_X_001
+    4300014: Salle_Top
+    4300016: Salle_Bottom
     7400000: Default Take
     9500000: //RootNode
   materials:

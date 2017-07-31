@@ -9,7 +9,8 @@ namespace LD39 {
 		public float speed;
 
 		public void Update() {
-			Vector3 targetPos = player.transform.position + offset;
+			if (player.currentChunk == null) return;
+			Vector3 targetPos = player.currentChunk.transform.position + offset;
 			transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.deltaTime);
 		}
 

@@ -9,6 +9,8 @@ namespace LD39 {
 
 		protected bool alive = true;
 
+		protected Vector3 knockVel = Vector3.zero;
+
 		public override void UpdateState() {
 			base.UpdateState();
 
@@ -22,7 +24,10 @@ namespace LD39 {
 				Die();
 			}
 			//body.AddExplosionForce(weapon.knockback, transform.position + transform.forward, 10f);
-			body.AddForce((transform.forward * -1f) * weapon.knockback, ForceMode.Impulse);
+			//body.AddForce((transform.forward * -1f) * weapon.knockback, ForceMode.VelocityChange);
+			Vector3 delta = transform.position - EntityManager.I.player.transform.position;
+			delta.Normalize();
+			knockVel = delta * weapon.knockback;
 		}
 
 		public virtual void Die() {
@@ -32,6 +37,7 @@ namespace LD39 {
 		public void OnTriggerStay(Collider other) {
 			AttackDetector attDetect = other.GetComponent<AttackDetector>();
 			if (attDetect == null) return;
+			if (tag == "Enemy" && attDetect.transform.parent.tag == "Enemy") return;
 			attDetect.TriggeredCol(this);
 		}
 
