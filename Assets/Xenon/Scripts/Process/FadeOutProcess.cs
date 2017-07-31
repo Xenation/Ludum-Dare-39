@@ -26,6 +26,14 @@ namespace Xenon.Processes {
 			this.graphic = graphic;
 		}
 
+		public override void OnBegin() {
+			base.OnBegin();
+			if (!graphic.gameObject.activeInHierarchy) {
+				graphic.gameObject.SetActive(true);
+			}
+			TimeUpdated();
+		}
+
 		public override void TimeUpdated() {
 			Color color = graphic.color;
 			color.a = CurrentValue;

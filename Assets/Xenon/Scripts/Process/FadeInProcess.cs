@@ -26,10 +26,22 @@ namespace Xenon.Processes {
 			this.graphic = graphic;
 		}
 
+		public override void OnBegin() {
+			base.OnBegin();
+			if (!graphic.gameObject.activeInHierarchy) {
+				graphic.gameObject.SetActive(true);
+			}
+		}
+
 		public override void TimeUpdated() {
 			Color color = graphic.color;
 			color.a = CurrentValue;
 			graphic.color = color;
+		}
+
+		public override void OnTerminate() {
+			base.OnTerminate();
+			graphic.gameObject.SetActive(false);
 		}
 
 	}

@@ -28,6 +28,10 @@ namespace LD39 {
 
 		private List<Vector2i> mainPath;
 
+		public void Awake() {
+			mainPathLength = DifficultyManager.I.currentDifficulty;
+		}
+
 		public void Start() {
 			if (mapRoot == null) {
 				mapRoot = new GameObject("Map").transform;

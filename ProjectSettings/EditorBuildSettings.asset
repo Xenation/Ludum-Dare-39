@@ -6,5 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/LD39/Scenes/test.unity
-    guid: 72de8cc25ceb7654bb85c8d27044b6d7
+    path: Assets/LD39/Scenes/mainmenu.unity
+    guid: 98a0c701b07ed7842b923c2779916ede
+  - enabled: 1
+    path: Assets/LD39/Scenes/intro.unity
+    guid: 8892b65716cc3bc44941c7559c4ebf4d
+  - enabled: 1
+    path: Assets/LD39/Scenes/level.unity
+    guid: ec1a05d0686eb9f4a9d8540e43398615
