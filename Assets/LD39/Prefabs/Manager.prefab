@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1741097644587670}
+  m_IsPrefabParent: 1
+--- !u!1 &1741097644587670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4157045612811300}
+  - component: {fileID: 114362391609306050}
+  - component: {fileID: 114071911891487028}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4157045612811300
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1741097644587670}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114071911891487028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1741097644587670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84cdaceee5b9556418c2da3024ee73d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+--- !u!114 &114362391609306050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1741097644587670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efd7b593b76c424eb94bfa51377243e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chunkSize: 8.6
+  chunksX: 20
+  chunksY: 20
+  seed: 456151
+  mainPathLength: 10
+  mapRoot: {fileID: 0}
+  rotatedRoot: {fileID: 0}
+  startingRoom:
+    type: 4
+    initTop: 1
+    initRight: 1
+    initBottom: 1
+    initLeft: 1
+    prefab: {fileID: 1927689875195488, guid: f2bd1901aebefe6418a1060cd673c305, type: 2}
+  endingRoom:
+    type: 4
+    initTop: 1
+    initRight: 1
+    initBottom: 1
+    initLeft: 1
+    prefab: {fileID: 1306393543183548, guid: ae77a0f9200011f41983406d780674b6, type: 2}
+  roomPrefabs:
+  - type: 0
+    initTop: 1
+    initRight: 0
+    initBottom: 0
+    initLeft: 0
+    prefab: {fileID: 1248252780144802, guid: 7f26946d8986015439998b6dc862df59, type: 2}
+  - type: 1
+    initTop: 0
+    initRight: 0
+    initBottom: 1
+    initLeft: 1
+    prefab: {fileID: 1056284004397934, guid: 4d9fe2b0e0c3dd84c8abfda05ca24f33, type: 2}
+  - type: 2
+    initTop: 1
+    initRight: 0
+    initBottom: 1
+    initLeft: 0
+    prefab: {fileID: 1492563302346032, guid: 20451a95a418b2448a2679d658c2ca10, type: 2}
+  - type: 3
+    initTop: 1
+    initRight: 1
+    initBottom: 0
+    initLeft: 1
+    prefab: {fileID: 1136896200704594, guid: 3c8a95f85d4fa9649a147695633bc75a, type: 2}
+  - type: 4
+    initTop: 1
+    initRight: 1
+    initBottom: 1
+    initLeft: 1
+    prefab: {fileID: 1209707366546164, guid: 49d20891bbc7b844181df384a95ccd52, type: 2}

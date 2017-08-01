@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5ad8b1a543ef74490cd5c943a9b14a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 2
   speed: 5
   attackCenterDistance: 0.7
   attackRange: 2

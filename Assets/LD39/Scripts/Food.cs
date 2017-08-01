@@ -1,4 +1,5 @@
 ﻿namespace LD39 {
+	[System.Serializable]
 	public class Food : Item {
 
 		public float fatnessGain;

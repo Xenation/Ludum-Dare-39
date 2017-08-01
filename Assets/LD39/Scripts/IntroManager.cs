@@ -14,7 +14,7 @@ namespace LD39 {
 			fadeIn.Attach(wait);
 			FadeOutProcess fadeOut = new FadeOutProcess(1f, blackFader);
 			wait.Attach(fadeOut);
-			fadeOut.TerminateCallback += DifficultyManager.I.NextLevel;
+			fadeOut.TerminateCallback += DifficultyManager.I.BackToMenu;
 			DifficultyManager.I.procManager.LaunchProcess(fadeIn);
 		}
 

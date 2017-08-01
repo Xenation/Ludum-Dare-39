@@ -21,6 +21,7 @@ namespace LD39 {
 		public override void TimeUpdated() {
 			base.TimeUpdated();
 			foreach (CanvasRenderer renderer in renderers) {
+				if (renderer == null) continue;
 				renderer.SetAlpha(CurrentValue);
 			}
 		}

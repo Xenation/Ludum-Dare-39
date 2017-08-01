@@ -196,8 +196,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1213606952554060}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.5358529, y: 0.00000011920929, z: 1.8436918}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.29088312, y: 0.29088315, z: 0.29088315}
   m_Children:
   - {fileID: 4153458089540172}
   - {fileID: 4283194731703044}
@@ -613,3 +613,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     name: 
+    fatnessGain: 20

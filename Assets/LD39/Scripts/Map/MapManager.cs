@@ -36,6 +36,8 @@ namespace LD39 {
 			}
 			mainPathLength = DifficultyManager.I.currentDifficulty;
 			EntityManager.I.player.OnRoomChange += OnPlayerChangedRoom;
+			//seed = (int) System.DateTime.Now.ToUniversalTime().Subtract(new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc)).TotalMilliseconds;
+			seed = Random.Range(System.Int32.MinValue, System.Int32.MaxValue);
 		}
 
 		public void Start() {

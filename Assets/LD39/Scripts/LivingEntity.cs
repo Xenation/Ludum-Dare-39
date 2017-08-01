@@ -4,7 +4,7 @@ namespace LD39 {
 	[AddComponentMenu("LD39/Entities/Living Entity")]
 	public class LivingEntity : Entity {
 
-		public int health = 5;
+		public float health = 5;
 		public float speed;
 
 		protected bool alive = true;
@@ -18,7 +18,7 @@ namespace LD39 {
 
 		public virtual void TakeDamage(Weapon weapon) {
 			if (!alive) return;
-			health -= weapon.damage;
+			health -= weapon.damage * weapon.buff;
 			if (health <= 0) {
 				health = 0;
 				Die();

@@ -8,7 +8,7 @@ namespace LD39 {
 		public const string ANIM_ATTACK = "attack";
 		public const string ANIM_HURT = "isHurt";
 		public const string ANIM_DIE = "dies";
-		public const float DEATH_TIMEOUT = 3f;
+		public const float DEATH_TIMEOUT = 0f;
 
 		public Weapon held;
 		public float attackCenterDistance = .7f;

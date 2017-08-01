@@ -11,7 +11,7 @@ namespace LD39 {
 		
 		/// <summary>
 		/// -1: main menu
-		/// 0: intro scene
+		/// 0: intro scene //infact win screen
 		/// |
 		/// 3: 1st Level
 		/// </summary>
@@ -22,9 +22,17 @@ namespace LD39 {
 
 		public ProcessManager procManager;
 
+		private bool isInit = false;
+
 		public void Awake() {
+			if (DifficultyManager.I.isInit) {
+				mainMenuRoot.SetActive(true);
+				DestroyImmediate(this);
+				return;
+			}
 			DontDestroyOnLoad(gameObject);
 			procManager = new ProcessManager();
+			isInit = true;
 		}
 
 		public void Start() {
@@ -51,18 +59,24 @@ namespace LD39 {
 		public void NextLevel() {
 			switch (currentDifficulty) {
 				case -1: // Main Menu
-					currentDifficulty = 0;
-					SceneManager.LoadScene("intro");
-					break;
-				case 0: // Intro
 					currentDifficulty = 3;
 					SceneManager.LoadScene("level");
 					break;
 				default:
+					if (currentDifficulty >= 13) {
+						currentDifficulty = 0;
+						SceneManager.LoadScene("intro");
+						break;
+					}
 					currentDifficulty++;
 					SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 					break;
 			}
+		}
+
+		public void BackToMenu() {
+			currentDifficulty = -1;
+			SceneManager.LoadScene("mainmenu");
 		}
 
 		public void ExitGame() {
