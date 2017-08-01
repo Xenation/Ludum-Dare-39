@@ -7,6 +7,8 @@
 		public override void Pickup() {
 			base.Pickup();
 			EntityManager.I.player.fatness += fatnessGain;
+			if (EntityManager.I.player.fatness > 200)
+				EntityManager.I.player.fatness = 200;
 		}
 
 	}

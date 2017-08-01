@@ -21,6 +21,7 @@ namespace LD39 {
 		public MapChunk currentChunk;
 
 		public Slider healthSlider;
+		public Slider hungerSlider;
 
 		public float fatness = 100f;
 		public GameObject meshSkinny;
@@ -153,6 +154,8 @@ namespace LD39 {
 					fatness = 0;
 				}
 			}
+
+			hungerSlider.value = (fatness <= 200) ? fatness/200 : 1;
 
 			healthSlider.value = (health != 0) ? 1 / (10 - health) : 1;
 		}
