@@ -178,6 +178,7 @@ namespace LD39 {
 			GetComponent<CapsuleCollider>().enabled = false;
 			body.velocity = Vector3.zero;
 			SequenceManager.I.Gameover();
+			healthSlider.value = 0;
 		}
 
 		public override void TakeDamage(Weapon weapon) {

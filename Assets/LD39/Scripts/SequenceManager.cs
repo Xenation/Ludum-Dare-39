@@ -30,10 +30,10 @@ namespace LD39 {
 		}
 
 		public void Gameover() {
-			FadeOutProcess fadeout = new FadeOutProcess(3f, blackFader);
+			FadeOutProcess fadeout = new FadeOutProcess(2f, blackFader);
 			FadeOutProcess fadetext = new FadeOutProcess(1f, gameoverText);
 			fadeout.Attach(fadetext);
-			TimedProcess wait = new TimedProcess(5f);
+			TimedProcess wait = new TimedProcess(2f);
 			fadetext.Attach(wait);
 			FadeInProcess fadetextout = new FadeInProcess(2f, gameoverText);
 			fadetextout.TerminateCallback += OnGameoverEnd;
